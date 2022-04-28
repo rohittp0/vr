@@ -46,10 +46,10 @@ def setup_repo(sender, instance: Scene, created, **kwargs):
 
     with open(f"/etc/nginx/includes/{instance.repo_name}.conf", 'w') as outfile:
         outfile.write(f'''
-            location /hosted/{instance.repo_name} {{
+            location /hosted/{instance.repo_name}/ {{
                 proxy_set_header Upgrade $http_upgrade;
                 proxy_set_header Connection "upgrade";
-                proxy_pass http://localhost:{3000+instance.id};
+                proxy_pass http://localhost:{3000+instance.id}/;
                 proxy_redirect off;
             }}
         ''')

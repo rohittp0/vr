@@ -1,0 +1,21 @@
+{% extends 'root.html' %}
+{% load static %}
+{% block title %}
+    Repo
+{% endblock %}
+
+{% block form %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Add">
+        {% if exists %}
+            <p>Name already taken, please try another one.</p>
+        {% endif %}
+
+    </form>
+
+{% endblock %}

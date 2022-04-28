@@ -1,10 +1,9 @@
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
 
-from . import views
-# Setup the URLs and include login URLs for the browsable API.
-router = DefaultRouter()
+# Set up the URLs and include login URLs for the browsable API.
+from home.views import AddForm, add
 
 urlpatterns = [
-    path(r'', include(router.urls)),
+    path(r'', add),
+    path(r'save', AddForm)
 ]

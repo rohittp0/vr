@@ -1,18 +1,19 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django import forms
 
 
 # Create your views here.
 from home.models import Scene
+from home.utils import pull
 
 
 class AddForm(forms.Form):
-    repo_name = forms.CharField(min_length=3, label="Repo Name", strip=True, required=True)
+    repo_name = forms.CharField(min_length=1, label="Repo Name", strip=True, required=True)
     repo_url = forms.URLField(label="Repo URL", required=True)
 
 
-def add(request):
+def add_repo(request):
     context = {}
 
     if request.method == 'POST':
@@ -32,7 +33,7 @@ def add(request):
             scene.save()
 
             # redirect to a new URL:
-            return HttpResponse(f"Repo saved find it at <a href='/hosted/{repo_name}'>{repo_name}</a>")
+            return HttpResponse(f"Repo saved find it at <a href='/vrs/{repo_name}'>{repo_name}</a>")
 
         # If this is a GET (or any other method) create the default form.
     else:
@@ -41,3 +42,12 @@ def add(request):
     context['form'] = form
 
     return render(request, 'home/add_form.html', context)
+
+
+def update_repo(request):
+    if "repo_name" not in request.GET:
+        return HttpResponse("repo_name required", status=400)
+
+    scene = get_object_or_404(Scene, repo_name=request.GET["repo_name"])
+
+    return pull(scene)

@@ -33,11 +33,12 @@ def setup_repo(sender, instance: Scene, created, **kwargs):
     with open(Path(root_path, f"{instance.repo_name}.js"), 'w') as outfile:
         outfile.write(hyper_jump.replace("%REPO_NAME%", instance.repo_name))
 
-    with open(Path(root_path, "scenes.js"), "r+") as js:
+    with open(Path(root_path, "hyperjumpHUD.js"), "r+") as js:
         current = js.read()
         js.seek(0)
         js.write(
-            current.replace("// ##", f"{{ name: '{instance.repo_name}', path: '{instance.repo_name}.js' }},\n// ##"))
+            current.replace("// ##", f"'{instance.repo_name}': './{instance.repo_name}/scenes.js',\n// ##")
+            .replace("// **", f"'{instance.repo_name}',\n// **"))
 
 
 def pull(instance: Scene):

@@ -5,18 +5,19 @@
 {% endblock %}
 
 {% block form %}
-
-    <center>
-    <br>
+    <div style="background-color: antiquewhite; display: grid; justify-content: center; height: 100%; padding: 2em 0;">
         <h3>
             Add New Repo
         </h3>
+
+        <br>
+
         <form action="" method="post">
             {% csrf_token %}
             <table>
                 {{ form.as_table }}
             </table>
-        <br>
+            <br>
             <input type="submit" value="Add">
             {% if exists %}
                 <p>Name already taken, please try another one.</p>
@@ -24,11 +25,15 @@
 
         </form>
 
+        <br>
+
         <hr>
 
-        <h3>
+        <h3 style="margin-top: 0.5em;">
             Update Repo
         </h3>
+
+        <br>
 
         <form action="update" method="get">
             {% csrf_token %}
@@ -38,6 +43,5 @@
             </label>
             <input type="submit" value="Update">
         </form>
-    </center>
-
+    </div>
 {% endblock %}
